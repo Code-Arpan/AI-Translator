@@ -1,0 +1,87 @@
+<!-- templates/index.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Translator</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1 class="mt-5 mb-4">AI Translator</h1>
+        <form method="post" action="/translate">
+            <div class="form-group">
+                <label for="source_text">Enter text to translate:</label>
+                <textarea id="source_text" name="source_text" class="form-control" rows="4"></textarea>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group col-md-5">
+                    <label for="source_language">Source Language:</label>
+                    <select id="source_language" name="source_language" class="form-control">
+                        {% for language in languages %}
+                            <option value="{{ language }}">{{ language }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="form-group col-md-2 text-center">
+                    <button type="button" class="btn btn-secondary mt-4" onclick="switchLanguages()">
+                        <span class="font-weight-bold">↔</span>
+                    </button>
+                </div>
+
+                <div class="form-group col-md-5">
+                    <label for="target_language">Target Language:</label>
+                    <select id="target_language" name="target_language" class="form-control">
+                        {% for language in languages %}
+                            <option value="{{ language }}">{{ language }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Translate</button>
+        </form>
+
+        {% if source_text %}
+            <div class="mt-4">
+                <h3>Original Text ({{ source_language }}):</h3>
+                <p>{{ source_text }}</p>
+
+                <h3>Translated Text ({{ target_language }}):</h3>
+                <p class="font-weight-bold">{{ translated_text|safe }}</p>
+
+                <button class="btn btn-success" onclick="playAudio()">Listen</button>
+                <audio id="audio" style="display: none">
+                    <source src="{{ url_for('static', filename='translated_audio.mp3') }}" type="audio/mp3">
+                    Your browser does not support the audio element.
+                </audio>
+            </div>
+        {% endif %}
+    </div>
+
+    <div class="made-by mt-4 text-center">
+        <p class="mb-0">Made by Sarthak Kedia & Ayush Kumar</p>
+    </div>
+
+    <script>
+        function switchLanguages() {
+            var sourceLanguage = document.getElementById("source_language");
+            var targetLanguage = document.getElementById("target_language");
+
+            var temp = sourceLanguage.value;
+            sourceLanguage.value = targetLanguage.value;
+            targetLanguage.value = temp;
+        }
+
+        function playAudio() {
+            var audio = document.getElementById("audio");
+            audio.play();
+        }
+    </script>
+</body>
+</html>
