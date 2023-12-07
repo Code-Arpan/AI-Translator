@@ -81,4 +81,4 @@ def speech_input():
         return jsonify({'error': 'Speech not recognized'})
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run()
