@@ -50,7 +50,7 @@ def translate():
     prompt = f"Translate the following text from {source_language} to {target_language}:\n\n{source_text}"
 
     response = openai.Completion.create(
-        engine="text-davinci-003",
+        engine="text-davinci-002",
         prompt=prompt,
         max_tokens=100
     )
