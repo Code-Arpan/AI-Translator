@@ -6,7 +6,7 @@ import speech_recognition as sr
 app = Flask(__name__)
 
 # Set your OpenAI API key here
-api_key = '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'
+api_key = 'Enter your API Key Here'
 openai.api_key = api_key
 
 # Language code mapping for gTTS
